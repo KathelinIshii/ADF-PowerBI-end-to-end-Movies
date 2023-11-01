@@ -1,0 +1,7 @@
+{
+	"name": "ADL_SQL",
+	"properties": {
+		"description": "- Source: Read data from ADL.\n- Destination: Store the data in Azure SQL Database.",
+		"annotations": []
+	}
+}
