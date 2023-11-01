@@ -1,0 +1,1392 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADF-PowerBI-end-to-end-Movies"
+		},
+		"AzureDataLake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLake'"
+		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
+		"AzureDataLake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://endtoendmovies.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ADL_SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "- Source: Read data from ADL.\n- Destination: Store the data in Azure SQL Database.",
+				"activities": [
+					{
+						"name": "ADLS-SQL-NAME",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "nconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "nconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "primaryName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "primaryName",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "birthYear",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "birthYear",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "deathYear",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "deathYear",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "primaryProfession",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "primaryProfession",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "knownForTitles",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "knownForTitles",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_NAME",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_NAME",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-AKAS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "titleId",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "titleId",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ordering",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ordering",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "title",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "title",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "region",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "region",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "language",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "language",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "types",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "types",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attributes",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attributes",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isOriginalTitle",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "isOriginalTitle",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_AKAS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_AKAS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-BASICS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "titleType",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "titleType",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "primaryTitle",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "primaryTitle",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "originalTitle",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "originalTitle",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isAdult",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "isAdult",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "startYear",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "startYear",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "endYear",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "endYear",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "runtimeMinutes",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "runtimeMinutes",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "genres",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "genres",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_BASICS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_BASICS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-CREW",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "directors",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "directors",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "writers",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "writers",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_CREW",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_CREW",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-EPISODE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "parentTconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "parentTconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "seasonNumber",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "seasonNumber",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "episodeNumber",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "episodeNumber",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_EPISODE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_EPISODE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-PRINCIPALS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ordering",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ordering",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "nconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "nconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "category",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "category",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "job",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "job",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "characters",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "characters",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_PRINCIPALS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_PRINCIPALS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "ADLS-SQL-TITLE-RATINGS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tconst",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "averageRating",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "averageRating",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "numVotes",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "numVotes",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TSV_TITLE_RATINGS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable_TITLE_RATINGS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TSV_NAME')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_NAME')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_AKAS')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_AKAS')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_BASICS')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_BASICS')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_CREW')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_CREW')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_EPISODE')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_EPISODE')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_PRINCIPALS')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_PRINCIPALS')]",
+				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_RATINGS')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_RATINGS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLake_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_NAME')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "name.basics.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\bI�@e\u0000\u0003data.tsv\u0000�[�n�Ȗ}�|���%s��W=�f{r�L\u0012��\u0000\u00034\u0018��\bˤ���v�Йy>��?6kW�*R�d��@\b\u0005��ڗ���U�/�~��n��\u0019�?57m��\u001b����X-ۆ���?���v�醾��l\u0018�u�u���������ll����mӍm%|\b�\b�U�a�/�csy����\u000e㋛nsٮ�M�\u000e�M��ֵ��\b/�\u0012��''U���2�ؑՇf7���Us٬װ!u%k�+�>�\u001d_L\u0006���H��BNyIOB��$3�+c��z5vW�v�b�q9l����:����ݦ��}��6����i+Z\u001b���6���Z�'\u001d�bMW�\u00156Үw�U\u0007S:�LV�O3Swc�mǴ\u001d\u0017�a\u000f\u0019�L�Z\u001b���oŀ����B�`bğ=V\u0017\u001eΪ]�V|�D���h2\u001a�*H�A\u001d��O>=٠�+\u0006",
+						"type": "String"
+					},
+					{
+						"name": "\u0019\u0018��܀){8t��8",
+						"type": "String"
+					},
+					{
+						"name": "w��\u000f�E\u001d8\u0004x��d=�\u0003����U\u0017������/^",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_NAME')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NAME"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_AKAS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.akas.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\bJ�@e\u0000\u0003data.tsv\u0000�<[w\u0013G�Ͻ����\u0007^ \u0007�dٚ7\u0019ۄ\u0018��m�ݜ})Ie��V���[ =a+d�\t\u0013�$�d��\u0012��\u0001'Î�\u0018\u001c|��W��",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_AKAS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_AKAS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_BASICS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.basics.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\b��@e\u0000\u0003data.tsv\u0000�\\[o�8v~v~\u0005��\t�\u001e���͓�}Y��p��g���$V\u0015ǒ�!%���`��N.��\u0002\u0013 H\u0010 \t�I",
+						"type": "String"
+					},
+					{
+						"name": "ߡ$J��T��\u000efƥC�\"��΅�J<\u0015�d+�I ؊�\f�^�\u0013aKi9�\u0011\u000f�+iN�4H�L�u��zKD����(����Q�\b�5\u0017�\u0016�o�d��3�2\u000b���s�C\u0011y2����[����|�5ںP^",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_BASICS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_BASICS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_CREW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.crew.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\b��@e\u0000\u0003data.tsv\u0000��K��8�-\u0006��\u001aK4�70�\u001aA�$5Ը!�{���/8|�\u0003 63�*�\u0011�\u0000��\u0004\u0001�?�����������?����?���������������������?��_��/�������:�������\u001c���Pb���ޜ���~�zon��g\u001e��k���~�n��^B�v$�ᡶ\u0012�\b���^�?9�웣��\u0007G�������r\u001d�P�g�\u0000��[\u0018��������\u0000�\u0014�R\\s\\o>\u0007 ��������b�ߤܛ�/\u0016۽�ߛǵ9�סѩ��\u0016�\t�~]�\u000eZ��oZ�[C+��T��~&ϣ\u001c�}����E�_�;����;?׫��-s�������������|�ܯS#�ks��e\t�f����\u0015��-{�S����[��[��h�<�\u000fl��e���qm��Ur�p\u001d�z����-��-��-��[��[��[��[���m�o��o��o��o��o�>�e��l[/\u001bS�{��e�}�����x�\u0000�����������I��-���v\u0015�O_�u��\u001a\u001b��\u001d�}�H{��x���^Sf�\u0007`�\u0007`�\u0007`�\u0007`�\u0007`\\?sx��\u001d��g\u000e��}�s���ɛ�\u000f����s}��\\_/lJ�9�\u0003t�\u001f����",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_CREW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_CREW"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_EPISODE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.episode.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\b\u0005�?e\u0000\u0003data.tsv\u0000|�9�-��$\bʧF���I�Tb)��B",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_EPISODE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_EPISODE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_PRINCIPALS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.principals.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\b��@e\u0000\u0003data.tsv\u0000�]ݎܸ���}",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_PRINCIPALS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_PRINCIPALS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TSV_TITLE_RATINGS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "title.ratings.tsv.gz",
+						"fileSystem": "imdb-movies"
+					},
+					"columnDelimiter": "\t",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\u001f�\b\b\\�@e\u0000\u0003data.tsv\u0000d�ˮ-1�\u001c6>����H��\u001b\u0019dn\u0004��Al ���g��XTo\u001f`�`\u0011j�EQ|\u0014����\u001f��������������������������������\u001f��_���������ڿ����?�������-��\u001b�\u0011��~\u001e��W�G�K��\u0015��V�4~��m�(�G�˫��Rz�)�����'Q��{��f]�����f\u0015��毦��\u0019��;���:��W���0�������t}�kq����?�?3������i4�t�������>Z�lh�z��V]�쥏������Uu����W����š��\tҵ",
+						"type": "String"
+					},
+					{
+						"name": "}���>����k$�����*kX�_�D��rz͒\u0019\u000b�f�N���޵R\u0016��V\u0011Ư���f��*����ZI�u��Tu���>��*��[ų�]#��+�[\u000e͆ۯ\u0016�k����O����t\u001c|�\u000e��'�VNg�\u0019*��L��xP�J����L�5:\u0016�6}���o<\"`j�J\u0002�h���ǯ�Z�8\u0013\u001b�'��\u001a^췕�)\u001a�{���\u001d��ɧD�M�9�Z������ߎ�\u0016g����0�\u0012滗�\u00063ֻ4u��~���`��\u000b?�1k���v����8��i�Ijh:\u000e�\u001a��\u000e��:Fs�\u0013\u0019^�8����������N\\�Xز��j�\u0016Z��_v\u0011�c\u0019��\b�J��\u0015��\u0015]ܰE�(��",
+						"type": "String"
+					},
+					{
+						"name": "n��t�\u0001�x\\�������U��\u0002�v���U�߃mUm�\u001fj\t7{���]^u",
+						"type": "String"
+					},
+					{
+						"name": "rz\u0011�wN�\u0003&\u001b!B{;����b8�S\u0004õ�D�u��\"�\u001eb��=�[�E�oϮf�[\"����o4�\u001f#F\u0019��w\u0013�.J�Wj�ٻ�\u0011j������'_���;�_cl\u0013w���p;h�\u001b/��\u0012�y\t1DhdTj�7��7�kh��ݱ��M�kت��J\u001dW%�\u0013j�ޛ�\u00015\u0003����g����Z��\u0012[����o�~\u001fm�f��~�2��Z�|F��ٟM�~\u0017�)Ѯ����W�������C����(\u001d{[3����>�۝\u000b����]�\f~$�|%\u0015_Ud�vѐ\u001c�J�v��=\"m��h�\f}\u0013\u001d2_u. ���j�e$չ�?���Z�:W1�f.Ng�M�6m�#{",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable_TITLE_RATINGS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TITLE_RATINGS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Exec_Diaria')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2023-11-02T06:00:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {}
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
