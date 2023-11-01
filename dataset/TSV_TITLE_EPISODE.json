@@ -1,0 +1,29 @@
+{
+	"name": "TSV_TITLE_EPISODE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.episode.tsv.gz",
+				"fileSystem": "imdb-movies"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\u001f�\b\b\u0005�?e\u0000\u0003data.tsv\u0000|�9�-��$\bʧF���I�Tb)��B",
+				"type": "String"
+			}
+		]
+	}
+}
