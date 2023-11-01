@@ -1,0 +1,37 @@
+{
+	"name": "TSV_NAME",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "name.basics.tsv.gz",
+				"fileSystem": "imdb-movies"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\u001f�\b\bI�@e\u0000\u0003data.tsv\u0000�[�n�Ȗ}�|���%s��W=�f{r�L\u0012��\u0000\u00034\u0018��\bˤ���v�Йy>��?6kW�*R�d��@\b\u0005��ڗ���U�/�~��n��\u0019�?57m��\u001b����X-ۆ���?���v�醾��l\u0018�u�u���������ll����mӍm%|\b�\b�U�a�/�csy����\u000e㋛nsٮ�M�\u000e�M��ֵ��\b/�\u0012��''U���2�ؑՇf7���Us٬װ!u%k�+�>�\u001d_L\u0006���H��BNyIOB��$3�+c��z5vW�v�b�q9l����:����ݦ��}��6����i+Z\u001b���6���Z�'\u001d�bMW�\u00156Үw�U\u0007S:�LV�O3Swc�mǴ\u001d\u0017�a\u000f\u0019�L�Z\u001b���oŀ����B�`bğ=V\u0017\u001eΪ]�V|�D���h2\u001a�*H�A\u001d��O>=٠�+\u0006",
+				"type": "String"
+			},
+			{
+				"name": "\u0019\u0018��܀){8t��8",
+				"type": "String"
+			},
+			{
+				"name": "w��\u000f�E\u001d8\u0004x��d=�\u0003����U\u0017������/^",
+				"type": "String"
+			}
+		]
+	}
+}
