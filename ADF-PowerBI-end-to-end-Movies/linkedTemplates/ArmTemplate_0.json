@@ -55,27 +55,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Exec_Diaria')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-11-02T06:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/TSV_NAME')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1386,6 +1365,37 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_PRINCIPALS')]",
 				"[concat(variables('factoryId'), '/datasets/TSV_TITLE_RATINGS')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable_TITLE_RATINGS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Exec_Diaria')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ADL_SQL",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2023-11-02T06:00:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ADL_SQL')]"
 			]
 		}
 	]
