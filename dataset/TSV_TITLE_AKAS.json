@@ -1,0 +1,29 @@
+{
+	"name": "TSV_TITLE_AKAS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.akas.tsv.gz",
+				"fileSystem": "imdb-movies"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\u001f�\b\bJ�@e\u0000\u0003data.tsv\u0000�<[w\u0013G�Ͻ����\u0007^ \u0007�dٚ7\u0019ۄ\u0018��m�ݜ})Ie��V���[ =a+d�\t\u0013�$�d��\u0012��\u0001'Î�\u0018\u001c|��W��",
+				"type": "String"
+			}
+		]
+	}
+}
