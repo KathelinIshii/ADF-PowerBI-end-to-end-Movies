@@ -1,0 +1,41 @@
+{
+	"name": "TSV_TITLE_RATINGS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.ratings.tsv.gz",
+				"fileSystem": "imdb-movies"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\u001f�\b\b\\�@e\u0000\u0003data.tsv\u0000d�ˮ-1�\u001c6>����H��\u001b\u0019dn\u0004��Al ���g��XTo\u001f`�`\u0011j�EQ|\u0014����\u001f��������������������������������\u001f��_���������ڿ����?�������-��\u001b�\u0011��~\u001e��W�G�K��\u0015��V�4~��m�(�G�˫��Rz�)�����'Q��{��f]�����f\u0015��毦��\u0019��;���:��W���0�������t}�kq����?�?3������i4�t�������>Z�lh�z��V]�쥏������Uu����W����š��\tҵ",
+				"type": "String"
+			},
+			{
+				"name": "}���>����k$�����*kX�_�D��rz͒\u0019\u000b�f�N���޵R\u0016��V\u0011Ư���f��*����ZI�u��Tu���>��*��[ų�]#��+�[\u000e͆ۯ\u0016�k����O����t\u001c|�\u000e��'�VNg�\u0019*��L��xP�J����L�5:\u0016�6}���o<\"`j�J\u0002�h���ǯ�Z�8\u0013\u001b�'��\u001a^췕�)\u001a�{���\u001d��ɧD�M�9�Z������ߎ�\u0016g����0�\u0012滗�\u00063ֻ4u��~���`��\u000b?�1k���v����8��i�Ijh:\u000e�\u001a��\u000e��:Fs�\u0013\u0019^�8����������N\\�Xز��j�\u0016Z��_v\u0011�c\u0019��\b�J��\u0015��\u0015]ܰE�(��",
+				"type": "String"
+			},
+			{
+				"name": "n��t�\u0001�x\\�������U��\u0002�v���U�߃mUm�\u001fj\t7{���]^u",
+				"type": "String"
+			},
+			{
+				"name": "rz\u0011�wN�\u0003&\u001b!B{;����b8�S\u0004õ�D�u��\"�\u001eb��=�[�E�oϮf�[\"����o4�\u001f#F\u0019��w\u0013�.J�Wj�ٻ�\u0011j������'_���;�_cl\u0013w���p;h�\u001b/��\u0012�y\t1DhdTj�7��7�kh��ݱ��M�kت��J\u001dW%�\u0013j�ޛ�\u00015\u0003����g����Z��\u0012[����o�~\u001fm�f��~�2��Z�|F��ٟM�~\u0017�)Ѯ����W�������C����(\u001d{[3����>�۝\u000b����]�\f~$�|%\u0015_Ud�vѐ\u001c�J�v��=\"m��h�\f}\u0013\u001d2_u. ���j�e$չ�?���Z�:W1�f.Ng�M�6m�#{",
+				"type": "String"
+			}
+		]
+	}
+}
