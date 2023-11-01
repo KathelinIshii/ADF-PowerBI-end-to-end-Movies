@@ -1,0 +1,33 @@
+{
+	"name": "TSV_TITLE_BASICS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.basics.tsv.gz",
+				"fileSystem": "imdb-movies"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\u001f�\b\b��@e\u0000\u0003data.tsv\u0000�\\[o�8v~v~\u0005��\t�\u001e���͓�}Y��p��g���$V\u0015ǒ�!%���`��N.��\u0002\u0013 H\u0010 \t�I",
+				"type": "String"
+			},
+			{
+				"name": "ߡ$J��T��\u000efƥC�\"��΅�J<\u0015�d+�I ؊�\f�^�\u0013aKi9�\u0011\u000f�+iN�4H�L�u��zKD����(����Q�\b�5\u0017�\u0016�o�d��3�2\u000b���s�C\u0011y2����[����|�5ںP^",
+				"type": "String"
+			}
+		]
+	}
+}
