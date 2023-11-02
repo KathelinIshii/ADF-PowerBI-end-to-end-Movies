@@ -1401,6 +1401,26 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ADL_SQL')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Teste2')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 168,
+						"startTime": "2023-11-02T13:28:00",
+						"timeZone": "GMT Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
