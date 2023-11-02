@@ -1,8 +1,8 @@
 {
-	"name": "Exec_Diaria",
+	"name": "Exec_Semanal",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -14,10 +14,21 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
+				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2023-11-02T06:00:00",
-				"timeZone": "GMT Standard Time"
+				"startTime": "2023-11-02T13:00:00",
+				"timeZone": "GMT Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						13
+					],
+					"weekDays": [
+						"Thursday"
+					]
+				}
 			}
 		}
 	}
