@@ -2,7 +2,7 @@
 	"name": "Exec_Semanal",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -16,15 +16,9 @@
 			"recurrence": {
 				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2023-11-02T13:00:00",
+				"startTime": "2023-11-02T13:12:00",
 				"timeZone": "GMT Standard Time",
 				"schedule": {
-					"minutes": [
-						0
-					],
-					"hours": [
-						13
-					],
 					"weekDays": [
 						"Thursday"
 					]
