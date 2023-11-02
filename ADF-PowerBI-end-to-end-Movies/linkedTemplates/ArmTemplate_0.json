@@ -55,7 +55,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Teste2')]",
+			"name": "[concat(parameters('factoryName'), '/Exec_Semanal')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -65,10 +65,15 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Hour",
-						"interval": 168,
-						"startTime": "2023-11-02T13:28:00",
-						"timeZone": "GMT Standard Time"
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2023-11-02T13:12:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"weekDays": [
+								"Thursday"
+							]
+						}
 					}
 				}
 			},
@@ -1388,7 +1393,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Exec_Semanal')]",
+			"name": "[concat(parameters('factoryName'), '/Teste2')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1406,15 +1411,10 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2023-11-02T13:12:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"weekDays": [
-								"Thursday"
-							]
-						}
+						"frequency": "Hour",
+						"interval": 168,
+						"startTime": "2023-11-02T13:28:00",
+						"timeZone": "GMT Standard Time"
 					}
 				}
 			},
