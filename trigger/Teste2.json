@@ -1,0 +1,17 @@
+{
+	"name": "Teste2",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 168,
+				"startTime": "2023-11-02T13:28:00",
+				"timeZone": "GMT Standard Time"
+			}
+		}
+	}
+}
