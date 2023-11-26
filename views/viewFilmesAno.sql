@@ -8,10 +8,12 @@ WHERE titleType = 'movie';
 
 SELECT titleType, originalTitle, startYear
 FROM TITLE_BASICS
-WHERE titleType = 'movie';
+WHERE titleType = 'movie' AND startYear >= '2010';
 
 CREATE VIEW FilmesAno
 AS
 SELECT titleType, originalTitle, startYear
 FROM TITLE_BASICS
-WHERE titleType = 'movie';
+WHERE titleType = 'movie' AND startYear >= '2010';
+
+DROP VIEW FilmesAno;

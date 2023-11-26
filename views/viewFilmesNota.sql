@@ -10,7 +10,7 @@ SELECT TB.originalTitle, TB.startYear, TB.genres, TR.averageRating, TR.numVotes
 FROM TITLE_BASICS AS TB
 JOIN TITLE_RATINGS AS TR
 ON TB.tconst = TR.tconst
-WHERE TB.titleType = 'movie';
+WHERE TB.titleType = 'movie'  AND startYear >= '2010';
 
 CREATE VIEW FilmesNota
 AS
@@ -18,4 +18,6 @@ SELECT TB.originalTitle, TB.startYear, TB.genres, TR.averageRating, TR.numVotes
 FROM TITLE_BASICS AS TB
 JOIN TITLE_RATINGS AS TR
 ON TB.tconst = TR.tconst
-WHERE TB.titleType = 'movie';
+WHERE TB.titleType = 'movie'  AND startYear >= '2010';
+
+DROP VIEW FilmesNota;

@@ -13,3 +13,5 @@ AS
 SELECT titleType, originalTitle, genres
 FROM TITLE_BASICS
 WHERE titleType = 'movie';
+
+DROP VIEW FilmesGenero;
